@@ -627,3 +627,50 @@ def check_tic_tac_toe():
 
 
 # check_tic_tac_toe()
+
+
+# Challenge 27 Tic Tac Toe Draw
+def tic_tac_toe_draw():
+    """This challenge is to have a player input coordinates into a
+    tic-tac-toe game and have the result printed out in the terminal.
+    """
+
+    game_board = [[" ", " ", " "], [" ", " ", " "], [" ", " ", " "]]
+    game_running = True
+    player = "X"
+
+    while game_running == True:
+        valid_choice = False
+
+        for row in game_board:
+            print(row)
+
+        while valid_choice == False:
+            player_choice = input(
+                f"Player {player} choose coordinates for a square. (e.g. 1, 3) "
+            )
+            coords = player_choice.split(", ")
+            if game_board[int(coords[0]) - 1][int(coords[1]) - 1] == " ":
+                valid_choice = True
+            else:
+                print("Sorry, that square is already taken.")
+
+        game_board[int(coords[0]) - 1][int(coords[1]) - 1] = player
+        player = "O" if player == "X" else "X"
+        game_running = " " in [item for sublist in game_board for item in sublist]
+
+
+# tic_tac_toe_draw()
+
+
+# Challenge 28 Max Of Three
+def max_of_three():
+    """This challenge is to take 3 numbers and returns the maximum of them"""
+
+    def find_max(num_1, num_2, num_3):
+        return sorted([num_1, num_2, num_3])[-1]
+
+    print(find_max(1, 10, 8))
+
+
+# max_of_three()
