@@ -674,3 +674,280 @@ def max_of_three():
 
 
 # max_of_three()
+
+# Challenge 29 Tic Tac Toe Game
+def tic_tac_toe_game():
+    """This challenge is to make a Tic-Tac-Toe game"""
+
+    pass
+
+
+tic_tac_toe_game()
+
+
+# Challenge 30 Pick Word
+def pick_word():
+    """This challenge is to pick a random word from an external file."""
+
+    from random import choice
+
+    with open("sowpods.txt") as open_file:
+        lines = open_file.readlines()
+        print(choice(lines).strip())
+
+
+# pick_word()
+
+
+# Challenge 31 Guess Letters
+def guess_letters():
+    """
+    This challenge is to display the characters of a secret
+    word that have been guessed correctly by the player
+    """
+
+    secret_word = "EVAPORATE"
+    print("Welcome to Hangman!")
+    playing = True
+    guessed = []
+
+    while playing == True:
+        word_as_list = [letter if letter in guessed else "_" for letter in secret_word]
+        display = ""
+        for letter in word_as_list:
+            display += f"{letter} "
+        print(display)
+
+        guess = input("Guess your letter: ").upper()
+        while guess in guessed:
+            print("Sorry, you have already guessed that letter.")
+            guess = input("Guess your letter: ").upper()
+
+        if guess not in secret_word:
+            print("incorrect")
+        else:
+            print("correct")
+            guessed.append(guess)
+
+        playing = False
+        for letter in secret_word:
+            if letter not in guessed:
+                playing = True
+
+    print("Congratulations, You win!")
+
+
+# guess_letters()
+
+
+# Challenge 32 Hangman
+def hangman():
+    """This challenge is to make the game of Hangman."""
+
+    import pics
+    from random import choice
+
+    continue_playing = "y"
+
+    while continue_playing == "y":
+
+        def random_word():
+            with open("sowpods.txt") as open_file:
+                lines = open_file.readlines()
+                return choice(lines).strip()
+
+        secret_word = random_word()
+        print("Welcome to Hangman")
+        game = True
+        guessed = []
+        display = ""
+        turns_left = 6
+
+        while game == True:
+            word_as_list = [
+                letter if letter in guessed else "_" for letter in secret_word
+            ]
+            display = ""
+            for letter in word_as_list:
+                display += f"{letter} "
+
+            print(pics.pics[-turns_left - 1])
+            print(f"\n{display}")
+            print(f"You have {turns_left} turns left.")
+
+            guess = input("Guess your letter: ").upper()
+            while guess in guessed:
+                print("Sorry, you have already guessed that letter.")
+                guess = input("Guess your letter: ").upper()
+
+            if guess not in secret_word:
+                guessed.append(guess)
+                turns_left -= 1
+                if turns_left <= 0:
+                    break
+            else:
+                guessed.append(guess)
+
+            game = False
+            for letter in secret_word:
+                if letter not in guessed:
+                    game = True
+
+        if turns_left <= 0:
+            print(pics.pics[6])
+            print("Sorry, you lose.")
+            print(f"The word was {secret_word}")
+        else:
+            print(f"The word was {secret_word}")
+            print("Congratulations, You win!")
+
+        while True:
+            continue_playing = input("Would you like to play again? y/n ")
+            if continue_playing == "y" or continue_playing == "n":
+                break
+            else:
+                continue
+
+
+# hangman()
+
+
+# Challenge 33 Birthday Dictionaries
+def birthday_dictionaries():
+    """This challenge is to display the birthday of a name that the user chooses."""
+
+    birthday_dictionary = {
+        "Benjamin Franklink": "17/01/1706",
+        "George Washington": "22/01/1732",
+        "Ronald Reagan": "06/02/1911",
+        "John Adams": "30/10/1735",
+        "Thomas Jefferson": "13/04/1743",
+    }
+
+    print("Welcome to the presidential birthday dictionary. We know the birthdays of:")
+    for name in birthday_dictionary.keys():
+        print(name)
+
+    name_choice = ""
+    while name_choice not in birthday_dictionary.keys():
+        name_choice = input("Whose birthday do you want us to display?\n")
+        if name_choice not in birthday_dictionary.keys():
+            print("Sorry, that is not a valid choice.")
+    print(f"{name_choice} was born on {birthday_dictionary[name_choice]}.")
+
+
+# birthday_dictionaries()
+
+
+# Challenge 34 Birthday JSON
+def birthday_json():
+    """
+    This challenge is to read birthdays from a JSON file and ask the user
+    to choose one. For a bonus, allow the user to add more birthdays to the file.
+    """
+
+    import json
+
+    with open("birthdays.txt") as open_file:
+        birthday_dictionary = json.load(open_file)
+
+    print("Welcome to the presidential birthday dictionary. We know the birthdays of:")
+    for name in birthday_dictionary.keys():
+        print(name)
+
+    name_choice = ""
+    while name_choice not in birthday_dictionary.keys():
+        name_choice = input("Whose birthday do you want us to display?\n")
+        if name_choice not in birthday_dictionary.keys():
+            print("Sorry, that is not a valid choice.")
+    print(f"{name_choice} was born on {birthday_dictionary[name_choice]}.")
+
+    confirm = input("Would you like to add a name to the list? y/n\n")
+    if confirm == "y":
+        name = input("What is the person's name?\n")
+        birthday = input("What is the person's birthday?\n")
+        birthday_dictionary.update({name: birthday})
+
+        with open("birthdays.txt", "w") as open_file:
+            json.dump(birthday_dictionary, open_file, indent=4)
+
+
+# birthday_json()
+
+
+## Challenge 35 Birthday Months
+def birthday_months():
+    """
+    This challenge is to read birthdays from a txt file. Then
+    count how many birthdays appear in each month of the year.
+    """
+
+    import json
+    from collections import Counter
+
+    month_table = {
+        "01": "January",
+        "02": "February",
+        "03": "March",
+        "04": "April",
+        "05": "May",
+        "06": "June",
+        "07": "July",
+        "08": "August",
+        "09": "September",
+        "10": "October",
+        "11": "November",
+        "12": "December",
+    }
+
+    with open("birthdays.txt") as open_file:
+        data = json.load(open_file)
+
+    month_list = [month[3:5] for month in data.values()]
+    print(Counter([month_table[month] for month in month_list]))
+
+
+# birthday_months()
+
+
+# Challenge 36 Birthday Plots
+def birthday_plots():
+    """
+    This challenge is to read birthdays from
+    a JSON file and plot them using Bokeh
+    """
+
+    import json
+    from collections import Counter
+    from bokeh.plotting import figure, show, output_file
+
+    month_table = {
+        "1": "January",
+        "2": "February",
+        "3": "March",
+        "4": "April",
+        "5": "May",
+        "6": "June",
+        "7": "July",
+        "8": "August",
+        "9": "September",
+        "10": "October",
+        "11": "November",
+        "12": "December",
+    }
+
+    with open("date_dictionary.txt") as open_file:
+        data = json.load(open_file)
+
+    month_list = [month.split("/")[1] for month in data.values()]
+    counted_list = Counter([month_table[month] for month in month_list])
+
+    x = [month for month in counted_list.keys()]
+    y = [count for count in counted_list.values()]
+    x_categories = x
+    p = figure(x_range=x_categories)
+    p.vbar(x=x, top=y, width=0.7)
+    show(p)
+
+
+# birthday_plots()

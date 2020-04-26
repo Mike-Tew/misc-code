@@ -1,0 +1,9 @@
+{
+    "Benjamin Franklink": "17/01/1706",
+    "George Washington": "22/01/1732",
+    "Ronald Reagan": "06/02/1911",
+    "John Adams": "30/10/1735",
+    "Thomas Jefferson": "13/04/1743",
+    "Ada Byron Lovelace": "10/12/1815",
+    "Albert Einstein": "14/03/1879"
+}
