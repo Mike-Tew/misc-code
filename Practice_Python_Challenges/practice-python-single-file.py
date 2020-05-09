@@ -679,10 +679,47 @@ def max_of_three():
 def tic_tac_toe_game():
     """This challenge is to make a Tic-Tac-Toe game"""
 
-    pass
+    board = [" " for x in range(0, 9)]
+    player = "O"
+
+    def draw_board(board):
+        print(f"{board[0]}|{board[1]}|{board[2]}")
+        print("-----")
+        print(f"{board[3]}|{board[4]}|{board[5]}")
+        print("-----")
+        print(f"{board[6]}|{board[7]}|{board[8]}")
+
+    def check_winner(board):
+        if board[0] == board[1] == board[2] != " ":
+            return board[0]
+        if board[3] == board[4] == board[5] != " ":
+            return board[3]
+        if board[6] == board[7] == board[8] != " ":
+            return board[6]
+        if board[0] == board[3] == board[6] != " ":
+            return board[0]
+        if board[1] == board[4] == board[7] != " ":
+            return board[1]
+        if board[2] == board[5] == board[8] != " ":
+            return board[2]
+        if board[0] == board[4] == board[8] != " ":
+            return board[0]
+        if board[2] == board[4] == board[6] != " ":
+            return board[2]
+        return " "
+
+    while True:
+        player = "X" if player == "O" else "O"
+        draw_board(board)
+        choice = int(input("Player 1: Choose a square: 1-9 "))
+        board[choice - 1] = player
+        if check_winner(board) != " ":
+            break
+
+    print(f"Congratulations! Player {player} wins.")
 
 
-tic_tac_toe_game()
+# tic_tac_toe_game()
 
 
 # Challenge 30 Pick Word
